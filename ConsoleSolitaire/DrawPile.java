@@ -2,8 +2,8 @@ import java.util.LinkedList;
 import java.util.*;
 
 public class DrawPile{
-	public LinkedList<Integer> cards; 
-	public final int pileMax = 4;
+	public List<Integer> cards; 
+	public static final int PILEMAX = 4;
 	public int frontIndex; 
 	private int[] normalCards; 
 	private int[] specialCards;
@@ -25,7 +25,7 @@ public class DrawPile{
 		}
 		cards = new LinkedList<Integer>();
 		//Fills cards with random cards
-		for (int i = 0; i < pileMax; i++) {
+		for (int i = 0; i < PILEMAX; i++) {
 			cards.add(generateRandomCard()); 
 		}
 	}	
@@ -43,7 +43,7 @@ public class DrawPile{
 	//Which is 2 to the power of 1, 2, 3, 4, 5, 6 
 	public int generateRandomCard() {
 		Random r = new Random(); 
-		int randomNum = r.nextInt(100) + 1;
+		int randomNum = r.nextInt(100);
 		int cardValue; 
 		//Special card
 		if (randomNum  == 1 && hasSpecialCards) {
@@ -68,10 +68,10 @@ public class DrawPile{
 	
 	//Prints the next card in the draw pile starting from the front
 	public void printNextTwo() {
-		if (pileMax < 2) {
+		if (PILEMAX < 2) {
 			throw new IllegalArgumentException(); 
 		}
-		String firstCard = renameIfSpecial(cards.peek());
+		String firstCard = renameIfSpecial(cards.get(0));
 		String secondCard = renameIfSpecial(cards.get(1));
 		
 		System.out.println("Next Cards:" + firstCard + ", "  + secondCard);
@@ -80,7 +80,7 @@ public class DrawPile{
 	//Prints the entire pile
 	public void printPile() {
 		System.out.print("Next Cards: ");
-		for (int i = pileMax - 1; i >= 0; i--) {
+		for (int i = PILEMAX - 1; i >= 0; i--) {
 			System.out.println(cards.get(i));
 		}
 	}
@@ -103,6 +103,6 @@ public class DrawPile{
 	
 	//reverses an action that was played on the pile
 	public void undo(int previousCard) {
-		cards.addFirst(previousCard);
+		cards.add(0, previousCard);
 	}
 }

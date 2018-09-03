@@ -5,7 +5,7 @@ public class GameStatus {
 	public int multiplier;
 	public int undos;
 	public int discards; 
-	public final int boardSize = 4; 
+	public static final int boardSize = 4; 
 	public LinkedList<Pile> board = new LinkedList<Pile>();
 	public DrawPile drawPile = new DrawPile(6, true); 
 	
@@ -90,7 +90,7 @@ public class GameStatus {
 	//Until they select a valid pile index
 	private int selectPileIndex(Scanner input, int currentCard) {
 		int selectedPile = input.nextInt() - 1; 
-		while (selectedPile > 3 || 
+		while (selectedPile > boardSize || 
 				selectedPile < 0 || 
 				!board.get(selectedPile).isValidPile(currentCard)) {
 			System.out.println("Please select a valid pile index");
@@ -126,7 +126,7 @@ public class GameStatus {
 	private void checkFor2048(int pileIndex) {
 		if (!getPile(pileIndex).isEmpty() && board.get(pileIndex).peek() == goalScore) {
 		  discards = standardDiscards;
-			board.get(pileIndex).clear();
+			board.get(pileIndex).cards.clear();
 			multiplier = multiplier + 1; 
 		}
 	}

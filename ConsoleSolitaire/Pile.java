@@ -2,10 +2,10 @@ import java.util.*;
 
 
 public class Pile {
-	LinkedList<Integer> cards; 
-	int pileMax = 8; 
-	boolean isFull; 
-	int goalScore; 
+	List<Integer> cards; 
+	public int pileMax = 8; 
+	public boolean isFull; 
+	public int goalScore; 
 	public int undoCount; 
 	
 	//Creates a new empty pile
@@ -54,7 +54,7 @@ public class Pile {
 	
 	//Removes the card from the end of the pile and returns it's value 
 	private int remove() {
-		return cards.removeLast();
+		return cards.remove(cards.size() - 1);
 	}
 	
 	//Combines the last two cards of the stack if they are identical
@@ -110,8 +110,8 @@ public class Pile {
 			
 			//Arrow
 			if(secondLastCard == -5) {
-			  cards.remove();
-			  cards.remove();
+			  remove(); 
+			  remove();
 			}
 			//If the stack is compressible keep going till it's not
 			else if (Math.abs(lastCard) == Math.abs(secondLastCard)) {
@@ -136,12 +136,7 @@ public class Pile {
 		if (isEmpty()) {
 			throw new NoSuchElementException(); 
 		}
-		return cards.getLast(); 
-	}
-	
-	//Returns a boolean of whether or not the pile is empty 
-	public boolean isEmpty() {
-			return cards.size() == 0; 
+		return cards.get(cards.size() - 1); 
 	}
 	
 	//Accepts a card
@@ -149,7 +144,7 @@ public class Pile {
 	//It cannot be played if the pile is full and it does not match the end of the pile
 	public boolean isValidPile(int newCard) {
 		return !isFull|| 
-		    Math.abs(newCard) == Math.abs(cards.getLast()) || 
+		    Math.abs(newCard) == Math.abs(cards.get(cards.size() - 1)) || 
 		    newCard == -1 ||
 		    newCard == -3 ||
 		    newCard == -5;
@@ -157,6 +152,11 @@ public class Pile {
 	
 	//clears the pile
 	public void clear() {
-		cards = new LinkedList<Integer>();
+		cards.clear(); 
+	}
+	
+	//Returns a boolean of whether or not the pile is empty 
+	public boolean isEmpty() {
+			return cards.isEmpty(); 
 	}
 }
